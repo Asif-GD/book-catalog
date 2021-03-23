@@ -16,7 +16,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 public class SwaggerBean implements WebMvcConfigurer {
 
-  @Override
+  @Override //to ensure that spring default implementation is overridden all the bean initialization
   public void addResourceHandlers(ResourceHandlerRegistry registry) {
     registry.addResourceHandler("/swagger-ui/**")
         .addResourceLocations("classpath:/META-INF/resources/webjars/springfox-swagger-ui/")
@@ -29,7 +29,7 @@ public class SwaggerBean implements WebMvcConfigurer {
     return new Docket(DocumentationType.SWAGGER_2)
         .apiInfo(apiInfo())
         .select()
-        .apis(RequestHandlerSelectors.any())
+        .apis(RequestHandlerSelectors.basePackage("com.catalog.service"))
         .paths(PathSelectors.any())
         .build();
   }
@@ -37,7 +37,7 @@ public class SwaggerBean implements WebMvcConfigurer {
   private ApiInfo apiInfo() {
     final Contact contact = new Contact("Asif Iqbal", "", "asif.coach@gmail.com");
 
-    return new ApiInfo("", "", "", "", contact,
+    return new ApiInfo("Book Catalog API", "", "v0.0.1", "", contact,
         "", "", Collections.emptyList());
   }
 }
