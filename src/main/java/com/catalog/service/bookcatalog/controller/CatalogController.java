@@ -1,9 +1,13 @@
 package com.catalog.service.bookcatalog.controller;
 
 import com.catalog.service.bookcatalog.model.request.CreateBookRequest;
+import com.catalog.service.bookcatalog.model.response.BookResponse;
 import com.catalog.service.bookcatalog.service.CatalogService;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.net.MalformedURLException;
+import java.net.URL;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,13 +15,23 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class CatalogController {
 
-  @Autowired //Spring annotation to instruct spring to handle this component - Not Recommended
-  private CatalogService catalogService;
+  private final CatalogService catalogService;
+
+  public CatalogController(CatalogService catalogService) {
+    this.catalogService = catalogService;
+  }
 
   @PostMapping(value = "/books")
-  public ResponseEntity<String> saveBooks(@RequestBody CreateBookRequest request) {
+  public ResponseEntity<URL> saveBooks(@RequestBody CreateBookRequest request)
+      throws MalformedURLException {
     Long bookId = catalogService.saveBooks(request);
-    String url = "http://localhost:8080/book/" + Long.toString(bookId);
-    return ResponseEntity.ok(url);
+    URL bookUrl = new URL("http://localhost:8080/book/" + bookId);
+    return ResponseEntity.ok(bookUrl);
+  }
+
+  @GetMapping("/book/{id}")
+  public ResponseEntity<BookResponse> displayBookDetails(@PathVariable("id") Long id) {
+    final BookResponse bookResponse = catalogService.displayBookDetails(id);
+    return ResponseEntity.ok(bookResponse);
   }
 }

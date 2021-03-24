@@ -8,4 +8,5 @@ public interface BookRepository extends CrudRepository<Book, Long> {
 
   @Query(value = "select * from book where isbn = :isbn", nativeQuery = true)
   Book findByISBN(String isbn);
+
 }

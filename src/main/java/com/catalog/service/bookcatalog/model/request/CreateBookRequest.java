@@ -1,12 +1,11 @@
 package com.catalog.service.bookcatalog.model.request;
 
-import java.util.List;
+import com.catalog.service.bookcatalog.model.BookInfo;
 import lombok.Data;
 
 @Data
 public class CreateBookRequest {
 
-  private String title;
-  private String isbn;
-  private List<BookAuthor> authors;
+  private BookInfo bookInfo;
+
 }
