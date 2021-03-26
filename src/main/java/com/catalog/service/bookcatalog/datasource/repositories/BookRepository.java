@@ -1,6 +1,8 @@
 package com.catalog.service.bookcatalog.datasource.repositories;
 
 import com.catalog.service.bookcatalog.datasource.entity.Book;
+import javax.transaction.Transactional;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 

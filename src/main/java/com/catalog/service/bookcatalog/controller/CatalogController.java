@@ -6,6 +6,7 @@ import com.catalog.service.bookcatalog.service.CatalogService;
 import java.net.MalformedURLException;
 import java.net.URL;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,5 +34,11 @@ public class CatalogController {
   public ResponseEntity<BookResponse> displayBookDetails(@PathVariable("id") Long id) {
     final BookResponse bookResponse = catalogService.displayBookDetails(id);
     return ResponseEntity.ok(bookResponse);
+  }
+
+  @DeleteMapping("/book/{isbn}")
+  public ResponseEntity<String> removeBook(@PathVariable("isbn") String isbn) {
+    String bookStatus = catalogService.removeBook(isbn);
+    return ResponseEntity.ok(bookStatus);
   }
 }

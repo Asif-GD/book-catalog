@@ -84,4 +84,14 @@ public class CatalogService {
     }
     throw new NoSuchElementException("Book with id: " + id + " not found");
   }
+
+  public String removeBook(String isbn){
+
+    Book book = bookRepository.findByISBN(isbn);
+    if (Objects.nonNull(book)) {
+      bookRepository.deleteById(book.getId());
+      return "Book has been removed";
+    }
+    return "Book not found";
+  }
 }
